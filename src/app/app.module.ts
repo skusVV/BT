@@ -6,14 +6,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { FormComponent } from '../components/form/form.component';
+import { MapComponent } from '../components/map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormComponent
+    FormComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +28,9 @@ import { FormComponent } from '../components/form/form.component';
     ReactiveFormsModule,
     MatSelectModule,
     MatCheckboxModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'YOUR_KEY'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
