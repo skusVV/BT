@@ -1,4 +1,26 @@
 .form {
   width: 800px;
-  background: lavender;
+  //background: lavender;
+  border: 1px solid azure;
+  padding: 25px;
+
+  .title {
+    text-align: center;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    width: 40%;
+
+    mat-form-field{
+      width: 100%;
+    }
+  }
 }
