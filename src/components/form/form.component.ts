@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FileUploader } from 'ng2-file-upload';
 
 interface ISelect {
   value: string;
@@ -17,8 +16,6 @@ export class FormComponent {
 
   startDate: FormControl = new FormControl('');
   endDate: FormControl = new FormControl('');
-  // location: FormControl = new FormControl('');
-  // office: FormControl = new FormControl('');
   trainTickets: ISelect[] = [
     {value: '1', viewValue: 'train 1'},
     {value: '2', viewValue: 'train 2'},
@@ -48,19 +45,6 @@ export class FormComponent {
     {value: '2', viewValue: 'hotel 2'},
     {value: '3', viewValue: 'hotel 3'}
   ];
-
-  uploader: FileUploader = new FileUploader({url: ''});
-  public hasBaseDropZoneOver: boolean = false;
-
-  public fileOverBase(e: any): void {
-    console.log(e)
-    // this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e:any):void {
-    console.log(e);
-    // this.hasAnotherDropZoneOver = e;
-  }
 
   downloadTickets(): void {
     console.log('downloadTickets');

@@ -13,12 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
 import { FormComponent } from '../components/form/form.component';
 import { MapComponent } from '../components/map/map.component';
+import { FilesComponent } from '../components/files/files.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     MapComponent,
+    FilesComponent,
   ],
   imports: [
     BrowserModule,

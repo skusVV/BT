@@ -89,11 +89,5 @@
     </div>
   </div>
   <app-map></app-map>
-  <div ng2FileDrop
-       [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-       (fileOver)="fileOverBase($event)"
-       [uploader]="uploader"
-       class="well my-drop-zone">
-    Upload expencies
-  </div>
+  <app-files></app-files>
 </section>
