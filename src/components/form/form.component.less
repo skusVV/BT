@@ -12,6 +12,11 @@
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
+
+    &-seperator {
+      padding-bottom:25px;
+      border-bottom: 2px solid #4350AF;
+    }
   }
 
   .item {
@@ -22,5 +27,22 @@
     mat-form-field{
       width: 100%;
     }
+  }
+
+  .my-drop-zone {
+    height: 100px;
+    margin-top: 25px;
+    border: dotted 3px lightgray;
+    text-align: center;
+    padding: 40px;
+    cursor: pointer;
+  }
+
+  .nv-file-over {
+    border: dotted 3px red;
+  }
+
+  .another-file-over-class {
+    border: dotted 3px green;
   }
 }

@@ -1,6 +1,6 @@
 <section class="form">
   <h1 class="title">{{title}}</h1>
-  <div class="row">
+  <div class="row row-seperator">
     <div class="item">
       <mat-form-field>
         <input matInput [matDatepicker]="start" placeholder="Start Date" [formControl]="startDate">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="row">
-    <a href="/" target="_blank">Download tickets</a>
+    <button mat-raised-button color="primary" (click)="downloadTickets()">Download tickets</button>
   </div>
   <div class="row">
     <mat-checkbox class="example-margin">Set not available notification</mat-checkbox>
@@ -56,14 +56,6 @@
       </mat-form-field>
     </div>
     <div class="item">
-      <mat-checkbox class="example-margin">Book meeting room</mat-checkbox>
-    </div>
-  </div>
-  <div class="row">
-    <div class="item">
-      <a href="/" target="_blank">Download emergency contact list</a>
-    </div>
-    <div class="item">
       <mat-form-field>
         <mat-label>Office</mat-label>
         <mat-select>
@@ -72,6 +64,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="item">
+      <button mat-raised-button color="primary" (click)="downloadEmergency()">Download emergency contact list</button>
+    </div>
+    <div class="item">
+      <mat-checkbox class="example-margin">Book meeting room</mat-checkbox>
     </div>
   </div>
   <div class="row">
@@ -89,4 +89,11 @@
     </div>
   </div>
   <app-map></app-map>
+  <div ng2FileDrop
+       [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+       (fileOver)="fileOverBase($event)"
+       [uploader]="uploader"
+       class="well my-drop-zone">
+    Upload expencies
+  </div>
 </section>
