@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { HttpService, ILocation } from '../../services/http.service';
+import { Observable, of } from 'rxjs';
+import { map, find } from 'rxjs/operators';
 
-interface ISelect {
-  value: string;
-  viewValue: string;
-}
+const kievOfficeCoords = {
+  latitude: 50.462673,
+  longitude: 30.449547,
+};
 
 @Component({
   selector: 'app-form',
@@ -16,35 +19,38 @@ export class FormComponent {
 
   startDate: FormControl = new FormControl('');
   endDate: FormControl = new FormControl('');
-  trainTickets: ISelect[] = [
-    {value: '1', viewValue: 'train 1'},
-    {value: '2', viewValue: 'train 2'},
-    {value: '3', viewValue: 'train 3'},
-  ];
+  trainTickets: Observable<any>;
+  plainTickets: Observable<any>;
+  locations: Observable<any>;
+  offices: Observable<any>;
+  hotels: Observable<any>;
 
-  plainTickets: ISelect[] = [
-    {value: '1', viewValue: 'plain 1'},
-    {value: '2', viewValue: 'plain 2'},
-    {value: '3', viewValue: 'plain 3'},
-  ];
+  selectedOffice: Observable<any>;
+  selectedLocationCoords: Observable<any> = of(kievOfficeCoords);
 
-  locations: ISelect[] = [
-    {value: '1', viewValue: 'location 1'},
-    {value: '2', viewValue: 'location 2'},
-    {value: '3', viewValue: 'location 3'}
-  ];
+  constructor(private http: HttpService) {
+    this.locations = this.http.locations().pipe(
+      map(data => data._embedded.geoLocations),
+    );
+    this.offices = this.http.offices().pipe(
+      map(data => data._embedded.offices),
+    );
+    this.hotels = this.http.hotels().pipe(
+      map(data => data._embedded.hotels),
+    );
 
-  offices: ISelect[] = [
-    {value: '1', viewValue: 'office 1'},
-    {value: '2', viewValue: 'office 2'},
-    {value: '3', viewValue: 'office 3'}
-  ];
+    const tickets = this.http.ticketOptions().pipe(
+      map(data => data._embedded.ticketOptions[0]),
+    );
 
-  hotels: ISelect[] = [
-    {value: '1', viewValue: 'hotel 1'},
-    {value: '2', viewValue: 'hotel 2'},
-    {value: '3', viewValue: 'hotel 3'}
-  ];
+    this.trainTickets = tickets.pipe(
+      map(data => data.trains),
+    );
+
+    this.plainTickets = tickets.pipe(
+      map(data => data.planes),
+    );
+  }
 
   downloadTickets(): void {
     console.log('downloadTickets');
@@ -52,5 +58,25 @@ export class FormComponent {
 
   downloadEmergency(): void {
     console.log('Download emergency contact list');
+  }
+
+  selectLocation(id: string): void {
+    this.selectedLocationCoords = this.locations.pipe(
+      map(locations => locations.find(office => office.id === id)),
+      map(({latitude, longitude}) => {
+        return {
+          latitude,
+          longitude,
+        };
+      })
+    );
+
+    // this.selectedLocationCoords.subscribe(data => console.log(data))
+  }
+
+  selectOffice(id: string): void{
+    this.selectedOffice = this.offices.pipe(
+      map(offices => offices.find(office => office._id === id)),
+    );
   }
 }

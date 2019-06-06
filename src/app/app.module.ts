@@ -9,11 +9,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AgmCoreModule } from '@agm/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { FormComponent } from '../components/form/form.component';
 import { MapComponent } from '../components/map/map.component';
 import { FilesComponent } from '../components/files/files.component';
+import { HttpService } from '../services/http.service';
 
 @NgModule({
   declarations: [
@@ -37,8 +39,11 @@ import { FilesComponent } from '../components/files/files.component';
     }),
     FileUploadModule,
     MatButtonModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    HttpService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

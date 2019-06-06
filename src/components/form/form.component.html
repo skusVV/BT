@@ -21,8 +21,8 @@
       <mat-form-field>
         <mat-label>Train Ticket Option</mat-label>
         <mat-select>
-          <mat-option *ngFor="let trainTicket of trainTickets" [value]="trainTicket.value">
-            {{trainTicket.viewValue}}
+          <mat-option *ngFor="let trainTicket of (trainTickets | async)" [value]="trainTicket">
+            {{trainTicket}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -31,8 +31,8 @@
       <mat-form-field>
         <mat-label>Plain Ticket Option</mat-label>
         <mat-select>
-          <mat-option *ngFor="let plainTicket of plainTickets" [value]="plainTicket.value">
-            {{plainTicket.viewValue}}
+          <mat-option *ngFor="let plainTicket of (plainTickets | async)" [value]="plainTicket">
+            {{plainTicket}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -49,8 +49,9 @@
       <mat-form-field>
         <mat-label>Location</mat-label>
         <mat-select>
-          <mat-option *ngFor="let location of locations" [value]="location.value">
-            {{location.viewValue}}
+          <mat-option *ngFor="let location of (locations | async)" [value]="location.id"
+                      (click)="selectLocation(location.id)">
+            {{location.city}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -59,8 +60,9 @@
       <mat-form-field>
         <mat-label>Office</mat-label>
         <mat-select>
-          <mat-option *ngFor="let office of offices" [value]="office.value">
-            {{office.viewValue}}
+          <mat-option *ngFor="let office of (offices| async)" [value]="office._id"
+                      (click)="selectOffice(office._id)">
+            {{office.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -71,7 +73,10 @@
       <button mat-raised-button color="primary" (click)="downloadEmergency()">Download emergency contact list</button>
     </div>
     <div class="item">
-      <mat-checkbox class="example-margin">Book meeting room</mat-checkbox>
+      <mat-checkbox class="example-margin"
+                    [disabled]="!(selectedOffice | async)?.roomsBooking">
+        Book meeting room
+      </mat-checkbox>
     </div>
   </div>
   <div class="row">
@@ -81,13 +86,13 @@
       <mat-form-field>
         <mat-label>Choose hotel</mat-label>
         <mat-select>
-          <mat-option *ngFor="let hotel of hotels" [value]="hotel.value">
-            {{hotel.viewValue}}
+          <mat-option *ngFor="let hotel of (hotels| async)" [value]="hotel._id">
+            {{hotel.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-  <app-map></app-map>
+  <app-map [coords]="(selectedLocationCoords | async)"></app-map>
   <app-files></app-files>
 </section>
