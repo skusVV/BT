@@ -16,6 +16,10 @@ export class HttpService {
   }
 
   submitForm(data: any): Observable<any> {
-    return this.http.post('`http://vgog.tk/api/bussinesstrip', data);
+    return this.http.post('http://vgog.tk/api/businessTripRequests', data);
+  }
+
+  findLocations(value: string): Observable<any> {
+    return this.http.get(`http://vgog.tk/api/geoLocations/search/findByCityStartingWith?city=${value}`);
   }
 }

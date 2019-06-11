@@ -9,8 +9,6 @@ const kievOfficeCoords = {
   longitude: 30.449547,
 };
 
-const MOCK_LVIV_LOCATION_ID = '5c9d09f1cc08179833a2469a';
-
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -41,11 +39,7 @@ export class FormComponent {
   selectedOffice: Observable<any>;
   selectedLocationCoords: Observable<any> = of(kievOfficeCoords);
 
-  constructor(private http: HttpService) {
-    this.locations = this.http.locations().pipe(
-      map(data => data._embedded.geoLocations),
-    );
-  }
+  constructor(private http: HttpService) {}
 
   downloadTickets(): void {
     // TODO should it link came from beck?
@@ -59,7 +53,7 @@ export class FormComponent {
 
   selectLocation(id: string): void {
     // TODO use id when all locations data will be available
-    const location = this.http.location(MOCK_LVIV_LOCATION_ID).pipe(
+    const location = this.http.location(id).pipe(
       take(1),
     );
 
@@ -103,5 +97,15 @@ export class FormComponent {
   setTicket(value: string, clearField) {
     this.form.get('tickets').setValue('value');
     this[clearField] = null;
+  }
+
+  getLocation() {
+    const value = this.form.get('location').value;
+
+    if (value.length > 2) {
+      this.locations = this.http.findLocations(value).pipe(
+        map(data => data._embedded.geoLocations)
+      );
+    }
   }
 }

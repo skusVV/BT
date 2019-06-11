@@ -10,6 +10,7 @@ import { AgmCoreModule } from '@agm/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { FormComponent } from '../components/form/form.component';
@@ -35,11 +36,12 @@ import { HttpService } from '../services/http.service';
     MatSelectModule,
     MatCheckboxModule,
     AgmCoreModule.forRoot({
-      apiKey: 'YOUR_KEY'
+      apiKey: 'AIzaSyDo4iYCdJLFvWb6AkcyveNBNc7X0Gahmhw'
     }),
     FileUploadModule,
     MatButtonModule,
     HttpClientModule,
+    MatAutocompleteModule,
   ],
   providers: [
     HttpService,

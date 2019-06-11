@@ -53,12 +53,26 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Location</mat-label>
-        <mat-select formControlName="location">
-          <mat-option *ngFor="let location of (locations | async)" [value]="location.id"
+        <input type="text"
+               (keyup)="getLocation()"
+               placeholder="Location" aria-label="Number"
+               matInput
+               formControlName="location"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let location of (locations | async)"
+                      [value]="location.city"
                       (click)="selectLocation(location.id)">
             {{location.city}}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
+        <!--<mat-select formControlName="location">-->
+          <!--<mat-option *ngFor="let location of (locations | async)" [value]="location.id"-->
+                      <!--(keyup)="getLocation($event)"-->
+                      <!--(click)="selectLocation(location.id)">-->
+            <!--{{location.city}}-->
+          <!--</mat-option>-->
+        <!--</mat-select>-->
       </mat-form-field>
     </div>
     <div class="item">
