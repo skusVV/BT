@@ -31,7 +31,8 @@
       <mat-form-field>
         <mat-label>Plain Ticket Option</mat-label>
         <mat-select>
-          <mat-option *ngFor="let plainTicket of (plainTickets | async)" [value]="plainTicket">
+          <mat-option *ngFor="let plainTicket of (plainTickets | async)"
+                      [value]="plainTicket">
             {{plainTicket}}
           </mat-option>
         </mat-select>
@@ -94,5 +95,7 @@
     </div>
   </div>
   <app-map [coords]="(selectedLocationCoords | async)"></app-map>
-  <app-files></app-files>
+  <div class="row">
+    <button class="row_submit" mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+  </div>
 </section>

@@ -5,6 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.less']
 })
-export class MapComponent {
+export class MapComponent{
   @Input() coords: any;
 }

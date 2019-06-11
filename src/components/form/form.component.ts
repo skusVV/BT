@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HttpService, ILocation } from '../../services/http.service';
+import { HttpService } from '../../services/http.service';
 import { Observable, of } from 'rxjs';
-import { map, find } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 const kievOfficeCoords = {
   latitude: 50.462673,
   longitude: 30.449547,
 };
+
+const MOCK_LVIV_LOCATION_ID = '5c9d09f1cc08179833a2469a';
 
 @Component({
   selector: 'app-form',
@@ -32,51 +34,52 @@ export class FormComponent {
     this.locations = this.http.locations().pipe(
       map(data => data._embedded.geoLocations),
     );
-    this.offices = this.http.offices().pipe(
-      map(data => data._embedded.offices),
-    );
-    this.hotels = this.http.hotels().pipe(
-      map(data => data._embedded.hotels),
-    );
-
-    const tickets = this.http.ticketOptions().pipe(
-      map(data => data._embedded.ticketOptions[0]),
-    );
-
-    this.trainTickets = tickets.pipe(
-      map(data => data.trains),
-    );
-
-    this.plainTickets = tickets.pipe(
-      map(data => data.planes),
-    );
   }
 
   downloadTickets(): void {
-    console.log('downloadTickets');
+    // TODO should it link came from beck?
+    window.open('http://www.africau.edu/images/default/sample.pdf', '_blank');
   }
 
   downloadEmergency(): void {
-    console.log('Download emergency contact list');
+    // TODO should it link came from beck?
+    window.open('http://www.africau.edu/images/default/sample.pdf', '_blank');
   }
 
   selectLocation(id: string): void {
-    this.selectedLocationCoords = this.locations.pipe(
-      map(locations => locations.find(office => office.id === id)),
-      map(({latitude, longitude}) => {
-        return {
-          latitude,
-          longitude,
-        };
-      })
+    // TODO use id when all locations data will be available
+    const location = this.http.location(MOCK_LVIV_LOCATION_ID).pipe(
+      take(1),
     );
 
-    // this.selectedLocationCoords.subscribe(data => console.log(data))
+    this.offices = location.pipe(
+      map(({offices}) => offices),
+    );
+    this.hotels = location.pipe(
+      map(({hotels}) => hotels),
+    );
+    this.trainTickets = location.pipe(
+      map(({options}) => options.trains),
+    );
+
+    this.plainTickets = location.pipe(
+      map(({options}) => options.planes),
+    );
+    this.selectedLocationCoords = location.pipe(
+      map(({latitude, longitude}) => {
+        return {latitude, longitude};
+      }),
+    );
+
   }
 
   selectOffice(id: string): void{
     this.selectedOffice = this.offices.pipe(
       map(offices => offices.find(office => office._id === id)),
     );
+  }
+
+  onSubmit(): void {
+   console.log('submit');
   }
 }

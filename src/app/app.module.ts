@@ -9,7 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AgmCoreModule } from '@agm/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FormComponent } from '../components/form/form.component';
