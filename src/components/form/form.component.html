@@ -1,16 +1,17 @@
 <section class="form">
+  <form [formGroup]="form">
   <h1 class="title">{{title}}</h1>
   <div class="row row-seperator">
     <div class="item">
       <mat-form-field>
-        <input matInput [matDatepicker]="start" placeholder="Start Date" [formControl]="startDate">
+        <input matInput [matDatepicker]="start" placeholder="Start Date" formControlName="startDate">
         <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
         <mat-datepicker #start></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="item">
       <mat-form-field>
-        <input matInput [matDatepicker]="end" placeholder="End Date" [formControl]="endDate">
+        <input matInput [matDatepicker]="end" placeholder="End Date" formControlName="endDate">
         <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
         <mat-datepicker #end></mat-datepicker>
       </mat-form-field>
@@ -20,8 +21,9 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Train Ticket Option</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let trainTicket of (trainTickets | async)" [value]="trainTicket">
+        <mat-select  formControlName="tickets">
+          <mat-option *ngFor="let trainTicket of (trainTickets | async)" [value]="trainTickets"
+                      (onSelectionChange)="setTicket($event, 'plainTicket')">
             {{trainTicket}}
           </mat-option>
         </mat-select>
@@ -30,8 +32,9 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Plain Ticket Option</mat-label>
-        <mat-select>
+        <mat-select formControlName="tickets">
           <mat-option *ngFor="let plainTicket of (plainTickets | async)"
+                      (onSelectionChange)="setTicket($event, 'trainTicket')"
                       [value]="plainTicket">
             {{plainTicket}}
           </mat-option>
@@ -43,13 +46,14 @@
     <button mat-raised-button color="primary" (click)="downloadTickets()">Download tickets</button>
   </div>
   <div class="row">
-    <mat-checkbox class="example-margin">Set not available notification</mat-checkbox>
+    <mat-checkbox class="example-margin" formControlName="setNotAvailableNotification"
+    >Set not available notification</mat-checkbox>
   </div>
   <div class="row">
     <div class="item">
       <mat-form-field>
         <mat-label>Location</mat-label>
-        <mat-select>
+        <mat-select formControlName="location">
           <mat-option *ngFor="let location of (locations | async)" [value]="location.id"
                       (click)="selectLocation(location.id)">
             {{location.city}}
@@ -60,7 +64,7 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Office</mat-label>
-        <mat-select>
+        <mat-select formControlName="office">
           <mat-option *ngFor="let office of (offices| async)" [value]="office._id"
                       (click)="selectOffice(office._id)">
             {{office.name}}
@@ -75,6 +79,7 @@
     </div>
     <div class="item">
       <mat-checkbox class="example-margin"
+                    formControlName="roomsBooking"
                     [disabled]="!(selectedOffice | async)?.roomsBooking">
         Book meeting room
       </mat-checkbox>
@@ -86,7 +91,7 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Choose hotel</mat-label>
-        <mat-select>
+        <mat-select formControlName="hotel">
           <mat-option *ngFor="let hotel of (hotels| async)" [value]="hotel._id">
             {{hotel.name}}
           </mat-option>
@@ -98,4 +103,5 @@
   <div class="row">
     <button class="row_submit" mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
   </div>
+  </form>
 </section>

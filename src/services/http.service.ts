@@ -14,4 +14,8 @@ export class HttpService {
   location(id: string): Observable<any> {
     return this.http.get<any>(`http://vgog.tk/api/geoLocations/${id}`).pipe(share());
   }
+
+  submitForm(data: any): Observable<any> {
+    return this.http.post('`http://vgog.tk/api/bussinesstrip', data);
+  }
 }

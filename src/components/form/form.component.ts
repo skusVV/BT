@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 const kievOfficeCoords = {
   latitude: 50.462673,
@@ -18,6 +18,17 @@ const MOCK_LVIV_LOCATION_ID = '5c9d09f1cc08179833a2469a';
 })
 export class FormComponent {
   title = 'New BT request';
+
+  form = new FormGroup({
+    startDate: new FormControl(new Date(), Validators.required),
+    endDate: new FormControl('', Validators.required),
+    tickets: new FormControl('', Validators.required),
+    location: new FormControl('', Validators.required),
+    office: new FormControl('', Validators.required),
+    hotel: new FormControl('', Validators.required),
+    roomsBooking: new FormControl(''),
+    setNotAvailableNotification: new FormControl(''),
+  });
 
   startDate: FormControl = new FormControl('');
   endDate: FormControl = new FormControl('');
@@ -80,6 +91,17 @@ export class FormComponent {
   }
 
   onSubmit(): void {
-   console.log('submit');
+   if (this.form.valid) {
+     this.http.submitForm(this.form.value)
+       .pipe(take(1))
+       .subscribe();
+   } else {
+     this.form.markAsDirty();
+   }
+  }
+
+  setTicket(value: string, clearField) {
+    this.form.get('tickets').setValue('value');
+    this[clearField] = null;
   }
 }
