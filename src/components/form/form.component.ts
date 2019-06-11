@@ -28,14 +28,11 @@ export class FormComponent {
     setNotAvailableNotification: new FormControl(''),
   });
 
-  startDate: FormControl = new FormControl('');
-  endDate: FormControl = new FormControl('');
   trainTickets: Observable<any>;
   plainTickets: Observable<any>;
   locations: Observable<any>;
   offices: Observable<any>;
   hotels: Observable<any>;
-
   selectedOffice: Observable<any>;
   selectedLocationCoords: Observable<any> = of(kievOfficeCoords);
 
