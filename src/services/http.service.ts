@@ -7,10 +7,6 @@ import { share } from 'rxjs/operators';
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  locations(): Observable<any> {
-    return this.http.get<any>('http://vgog.tk/api/geoLocations');
-  }
-
   location(id: string): Observable<any> {
     return this.http.get<any>(`http://vgog.tk/api/geoLocations/${id}`).pipe(share());
   }

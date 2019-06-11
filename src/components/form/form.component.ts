@@ -52,7 +52,6 @@ export class FormComponent {
   }
 
   selectLocation(id: string): void {
-    // TODO use id when all locations data will be available
     const location = this.http.location(id).pipe(
       take(1),
     );
